@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect, FC} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import { useAudio } from './hooks/useAudio';
 import { useImages } from './hooks/useImages';
 import { useGameEngine } from './hooks/useGameEngine';
@@ -47,8 +47,6 @@ const App = () => {
     const {
         score,
         lives,
-        basketX,
-        gamePaused,
         setGamePaused,
         handleMove,
         resetGame,

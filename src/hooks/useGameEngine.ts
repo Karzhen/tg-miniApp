@@ -27,7 +27,7 @@ const itemSize = 80;
 const itemRadius = 40;
 
 export const useGameEngine = (
-    canvasRef: React.RefObject<HTMLCanvasElement>,
+    canvasRef: React.RefObject<HTMLCanvasElement | null>,
     screen: Screen,
     setScreen: React.Dispatch<React.SetStateAction<Screen>>,
     images: {
@@ -51,7 +51,7 @@ export const useGameEngine = (
     const [basketX, setBasketX] = useState(canvasWidth / 2 - basketWidth / 2);
     const [gamePaused, setGamePaused] = useState(false);
 
-    const animationRef = useRef<number>();
+    const animationRef = useRef<number>(0);
 
     // Обновляем гравитацию в зависимости от счета
     useEffect(() => {

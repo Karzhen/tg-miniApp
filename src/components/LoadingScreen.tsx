@@ -1,5 +1,4 @@
 import LoadingBar from "./LoadingBar.tsx";
-import React from "react";
 
 const LoadingScreen = () => (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
