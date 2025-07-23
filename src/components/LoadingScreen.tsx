@@ -10,7 +10,7 @@ const LoadingScreen = () => (
             fontSize: '72px',
             color: 'black',
             lineHeight: 0.9,
-            letterSpacing: '-2px',
+            letterSpacing: '-1px',
         }}>Loading...</p>
     </div>
 );

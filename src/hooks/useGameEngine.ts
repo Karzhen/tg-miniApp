@@ -21,10 +21,11 @@ type VibeMessage = {
 const canvasWidth = window.innerWidth;
 const canvasHeight = window.innerHeight;
 
-const basketWidth = 158;
-const basketHeight = 108;
-const itemSize = 80;
-const itemRadius = 40;
+
+const basketWidth = canvasWidth / 4;
+const basketHeight = basketWidth * 108 / 158;
+const itemSize = canvasWidth / 8;
+const itemRadius = itemSize / 2;
 
 export const useGameEngine = (
     canvasRef: React.RefObject<HTMLCanvasElement | null>,
@@ -41,28 +42,31 @@ export const useGameEngine = (
         plusVibeAudio: HTMLAudioElement | null;
         minusVibeAudio: HTMLAudioElement | null;
         loseAudio: HTMLAudioElement | null;
-    }
+    },
+    screenWidth: number,
 ) => {
     const [score, setScore] = useState(0);
     const [lives, setLives] = useState(1);
     const [gravity, setGravity] = useState(2);
+    const [targetGravity, setTargetGravity] = useState(2);
     const [items, setItems] = useState<Item[]>([]);
     const [vibes, setVibes] = useState<VibeMessage[]>([]);
     const [basketX, setBasketX] = useState(canvasWidth / 2 - basketWidth / 2);
+    const [targetBasketX, setTargetBasketX] = useState(basketX);
     const [gamePaused, setGamePaused] = useState(false);
 
     const animationRef = useRef<number>(0);
 
     // Обновляем гравитацию в зависимости от счета
     useEffect(() => {
-        const baseGravity = 2;
-        const maxGravity = 8;
-        if (score <= 15) {
-            setGravity(baseGravity);
-        } else {
-            const smoothGravity = baseGravity + (score - 15) * 0.03;
-            setGravity(Math.min(smoothGravity, maxGravity));
-        }
+    const baseGravity = 2;
+    const maxGravity = 8;
+    const step = 0.5; // на сколько увеличивается
+
+    // Каждые 15 очков увеличиваем на шаг
+    const level = Math.floor(score / 15);
+    const newTarget = Math.min(baseGravity + level * step, maxGravity);
+    setTargetGravity(newTarget);
     }, [score]);
 
     // Генерация падающих предметов
@@ -100,6 +104,17 @@ export const useGameEngine = (
         const draw = () => {
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+            const gravityStep = 0.05;
+            if (Math.abs(gravity - targetGravity) > 0.01) {
+                const direction = gravity < targetGravity ? 1 : -1;
+                setGravity(prev => prev + gravityStep * direction);
+            }
+
+            const speed = 0.1;
+            const dx = targetBasketX - basketX;
+            if (Math.abs(dx) > 0.5) {
+                setBasketX(prev => prev + dx * speed);
+            }
             // Рисуем корзину
             if (images.basketImage && images.basketImage.complete) {
                 ctx.drawImage(
@@ -118,13 +133,17 @@ export const useGameEngine = (
                 const newY = item.y + gravity;
 
                 // Проверяем пойман ли предмет корзиной
+                const itemCenterX = item.x + itemSize / 2;
+                const itemBottomY = newY + itemSize;
+                const basketTopY = canvasHeight - basketHeight - 50;
                 const caught =
-                    newY + itemSize >= canvasHeight - basketHeight - 10 &&
-                    item.x + itemSize >= basketX &&
-                    item.x <= basketX + basketWidth;
-
-                const missed = newY > canvasHeight;
-
+                    itemBottomY >= basketTopY &&
+                    newY < basketTopY + basketHeight * 0.4 &&
+                    itemCenterX >= basketX &&
+                    itemCenterX <= basketX + basketWidth;
+                
+                const missed = newY > canvasHeight + 40;
+                
                 if (caught) {
                     if (item.type === 'summer') {
                         setScore(prev => prev + 1);
@@ -199,7 +218,6 @@ export const useGameEngine = (
                             riseSpeed: 0.7,
                         });
                     }
-                    // зимний пропущенный предмет игнорируем
                 } else {
                     newItems.push({ ...item, y: newY });
 
@@ -272,6 +290,7 @@ export const useGameEngine = (
         items,
         basketX,
         gravity,
+        targetGravity,
         screen,
         vibes,
         gamePaused,
@@ -284,7 +303,8 @@ export const useGameEngine = (
     const handleMove = (x: number) => {
         const rect = canvasRef.current!.getBoundingClientRect();
         const pos = x - rect.left;
-        setBasketX(Math.max(0, Math.min(pos - basketWidth / 2, canvasWidth - basketWidth)));
+        const target = Math.max(0, Math.min(pos - basketWidth / 2, canvasWidth - basketWidth));
+        setTargetBasketX(target);
     };
 
     // Сброс игры

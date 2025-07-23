@@ -8,6 +8,14 @@ import loseBackgroundImgSrc from './images/lose.png';
 import pauseIconSrc from './images/pause.png';
 import playButtonImgSrc from './images/play.png';
 import lkBoxSrc from './images/lkbox.png';
+import leaderBoxSrc from './images/leaderbox.png';
+import hpImgSrc from './images/hp.png';
+import pointsImgSrc from './images/points.png';
+import pauseBackgroundImgSrc from './images/pausebackground.png';
+import pauseBtnImgSrc from './images/pausebtn.png';
+import goldcoinSrc from './images/goldcoin.png';
+import silvercoinSrc from './images/silvercoin.png';
+import bronzecoinSrc from './images/bronzecoin.png';
 
 // Музыка
 import themeMusicSrc from './sounds/theme.mp3';
@@ -27,6 +35,14 @@ export {
     pauseIconSrc,
     playButtonImgSrc,
     lkBoxSrc,
+    leaderBoxSrc,
+    hpImgSrc,
+    pointsImgSrc,
+    pauseBackgroundImgSrc,
+    pauseBtnImgSrc,
+    goldcoinSrc,
+    silvercoinSrc,
+    bronzecoinSrc,
     themeMusicSrc,
     loseSoundSrc,
     selectSoundSrc,

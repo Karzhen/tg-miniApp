@@ -32,7 +32,7 @@ const LoadingBar = () => {
                 color: 'black',
             }}
         >
-            {blocks.join(' ')}
+            {blocks.join('')}
         </div>
     );
 };
