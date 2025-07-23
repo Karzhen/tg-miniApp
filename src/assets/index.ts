@@ -23,6 +23,7 @@ import loseSoundSrc from './sounds/lose.mp3';
 import selectSoundSrc from './sounds/select.mp3';
 import plusVibeSoundSrc from './sounds/plus_vibe.mp3';
 import minusVibeSoundSrc from './sounds/minus_vibe.mp3';
+import jumpSoundSrc from './sounds/jump.mp3';
 
 // Экспорт
 export {
@@ -48,4 +49,5 @@ export {
     selectSoundSrc,
     plusVibeSoundSrc,
     minusVibeSoundSrc,
+    jumpSoundSrc,
 };

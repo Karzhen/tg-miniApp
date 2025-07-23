@@ -5,6 +5,7 @@ import { backgroundImgSrc, leaderBoxSrc, goldcoinSrc, silvercoinSrc, bronzecoinS
 type LeaderboardEntry = {
     name: string;
     score: number;
+    coinImg: any;
 };
 
 const leaderboardData: LeaderboardEntry[] = [

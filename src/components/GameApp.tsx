@@ -21,7 +21,7 @@ import {
     pointsImgSrc,
     hpImgSrc,
     pauseBackgroundImgSrc,
-    pauseBtnImgSrc,
+    pauseBtnImgSrc, jumpSoundSrc,
 } from '../assets';
 import { summerImagesSrc } from './summerItems';
 import { winterImagesSrc } from './winterItems';
@@ -41,6 +41,7 @@ const GameApp = () => {
     const themeAudio = useAudio(themeMusicSrc, { loop: true, volume: 0.5 });
     const selectAudio = useAudio(selectSoundSrc, { volume: 1 });
     const loseAudio = useAudio(loseSoundSrc, { volume: 1 });
+    const jumpAudio = useAudio(jumpSoundSrc, { volume: 1 });
     const plusVibeAudio = useAudio(plusVibeSoundSrc, { volume: 1 });
     const minusVibeAudio = useAudio(minusVibeSoundSrc, { volume: 1 });
 
@@ -67,6 +68,7 @@ const GameApp = () => {
         plusVibeAudio: plusVibeAudio.ref.current,
         minusVibeAudio: minusVibeAudio.ref.current,
         loseAudio: loseAudio.ref.current,
+        jumpAudio: jumpAudio.ref.current,
     }, canvasSize.width);
 
     const playSelectSound = () => selectAudio.play();

@@ -42,8 +42,8 @@ export const useGameEngine = (
         plusVibeAudio: HTMLAudioElement | null;
         minusVibeAudio: HTMLAudioElement | null;
         loseAudio: HTMLAudioElement | null;
+        jumpAudio: HTMLAudioElement | null;
     },
-    screenWidth: number,
 ) => {
     const [score, setScore] = useState(0);
     const [lives, setLives] = useState(1);
@@ -59,14 +59,20 @@ export const useGameEngine = (
 
     // Обновляем гравитацию в зависимости от счета
     useEffect(() => {
-    const baseGravity = 2;
-    const maxGravity = 8;
-    const step = 0.5; // на сколько увеличивается
+        const baseGravity = 2;
+        const maxGravity = 8;
+        const step = 0.5; // на сколько увеличивается
 
-    // Каждые 15 очков увеличиваем на шаг
-    const level = Math.floor(score / 15);
-    const newTarget = Math.min(baseGravity + level * step, maxGravity);
-    setTargetGravity(newTarget);
+        // Каждые 15 очков увеличиваем на шаг
+        const level = Math.floor(score / 15);
+        const newTarget = Math.min(baseGravity + level * step, maxGravity);
+
+        // if (sounds.jumpAudio) {
+        //     sounds.jumpAudio.currentTime = 0;
+        //     sounds.jumpAudio.play().catch(() => {});
+        // }
+
+        setTargetGravity(newTarget);
     }, [score]);
 
     // Генерация падающих предметов
