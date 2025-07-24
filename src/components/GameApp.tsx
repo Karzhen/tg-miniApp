@@ -69,7 +69,7 @@ const GameApp = () => {
         minusVibeAudio: minusVibeAudio.ref.current,
         loseAudio: loseAudio.ref.current,
         jumpAudio: jumpAudio.ref.current,
-    }, canvasSize.width);
+    });
 
     const playSelectSound = () => selectAudio.play();
 
